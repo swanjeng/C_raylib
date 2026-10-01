@@ -3,11 +3,13 @@
 int main() {
     const int screenWidth = 800;
     const int screenHeight = 450;
+    const char title[] = "Raylib Test";
+    Color ballColor = {255, 0, 128, 255};
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - input keys");
+    InitWindow(screenWidth, screenHeight, title);
     SetTargetFPS(60);
-    
-    Vector2 ballPosition = { screenWidth / 2.0, screenHeight / 2.0 };
+
+    Vector2 ballPosition = { (float)screenWidth/2, (float)screenHeight/2 };
 
     while (!WindowShouldClose()) {
         if (IsKeyDown(KEY_RIGHT)) ballPosition.x += 2.0f;
@@ -17,8 +19,8 @@ int main() {
         
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("move the ball with arrow keys", 10, 10, 20, DARKGRAY);
-        DrawCircleV(ballPosition, 50, MAROON);
+        DrawText("move the ball with arrow keys", 10, 10, 30, DARKGRAY);
+        DrawCircleV(ballPosition, 50, ballColor);
         EndDrawing();
     }
 
