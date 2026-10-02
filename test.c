@@ -18,7 +18,7 @@ int main() {
         if (IsKeyDown(KEY_DOWN)) ballPosition.y += 2.0f;
         
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(WHITE);
         DrawText("move the ball with arrow keys", 10, 10, 30, DARKGRAY);
         DrawCircleV(ballPosition, 50, ballColor);
         EndDrawing();

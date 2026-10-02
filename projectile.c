@@ -40,7 +40,7 @@ int main() {
         }
 
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(WHITE);
         DrawCircleV(ballPosition, ballRadius, ballColor);
         EndDrawing();
     }
