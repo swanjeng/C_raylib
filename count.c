@@ -1,54 +1,49 @@
 #include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 450
+#define TITLE "按鈕測試 - Raylib"
 
 int main() {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-    const char title[] = "按鈕";
-    
-    int btnPlusPressed = 0;
-    int btnMinusPressed = 0;
+    Rectangle plusButton = {100, 300, 200, 100};
+    Rectangle minusButton = {500, 300, 200, 100};
+    Color plusColor, minusColor;
+    Vector2 mousePos;
     int counter = 0;
     
-    InitWindow(screenWidth, screenHeight, title);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
     SetTargetFPS(60);
-    Font customFont = LoadFontEx("./Resources/Iansui-Regular.ttf", 32, NULL, 0);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 70);
-    GuiSetFont(customFont);
 
     while (!WindowShouldClose()) {
-        if (btnPlusPressed) counter ++;
-        if (btnMinusPressed) counter --;
-
-        char text[256];
-        int counter1 = counter, p = 0;
-        while (counter1 > 0) {
-            text[p] = counter1 % 10 + '0';
-            counter1 /= 10;
-            p ++;
-            if (p >= 255) break;
+        mousePos = GetMousePosition();
+        if (CheckCollisionPointRec(mousePos, plusButton)) {
+            plusColor = BLUE;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+                plusColor = DARKBLUE;
+                counter ++;
+            }
+        } else {
+            plusColor = SKYBLUE;
         }
-        for (int i = 0 ; i < p / 2 ; i ++) {
-            char tmp = text[i];
-            text[i] = text[p - i - 1];
-            text[p - i - 1] = tmp;
+        if (CheckCollisionPointRec(mousePos, minusButton)) {
+            minusColor = BLUE;
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+                minusColor = DARKBLUE;
+                counter --;
+            }
+        } else {
+            minusColor = SKYBLUE;
         }
-        if (p == 0) {
-            text[0] = '0';
-            p = 1;
-        }
-        text[p] = '\0';
 
         BeginDrawing();
         ClearBackground(WHITE);
-        DrawTextEx(customFont, text, (Vector2){300, 100}, 50, 2, BLACK);
-        btnPlusPressed = GuiButton((Rectangle) { 500, 250, 200, 100 }, "+");
-        btnMinusPressed = GuiButton((Rectangle) { 100, 250, 200, 100 }, "-");
+        DrawText(TextFormat("%d", counter), 300, 100, 50, BLACK);
+        DrawRectangleRec(plusButton, plusColor);
+        DrawText("+", plusButton.x + plusButton.width / 2, plusButton.y + plusButton.height / 2, 50, RAYWHITE);
+        DrawRectangleRec(minusButton, minusColor);
+        DrawText("-", minusButton.x + minusButton.width / 2, minusButton.y + minusButton.height / 2, 50, RAYWHITE);
         EndDrawing();
     }
 
-    UnloadFont(customFont);
     CloseWindow();
     return 0;
 }
