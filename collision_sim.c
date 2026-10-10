@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include <math.h>
+#include <stdlib.h>
 
 int main() {
     const int screenWidth = 800;
@@ -8,7 +10,7 @@ int main() {
     float ball1Velocity = 5.0;
     float ball2Velocity = -5.0;
     float ball1Mass = 1.0;
-    float ball2Mass = 10.0;
+    float ball2Mass = 1.0;
     Color ball1Color = {255, 0, 0, 255};
     Color ball2Color = {0, 0, 255, 255};
     Vector2 ball1Position = { 200, 255 };
@@ -26,6 +28,16 @@ int main() {
             float new_ball2Velocity = (ball2Velocity * (ball2Mass - ball1Mass) + 2 * ball1Mass * ball1Velocity) / (ball2Mass + ball1Mass);
             ball1Velocity = new_ball1Velocity;
             ball2Velocity = new_ball2Velocity;
+            if (fabs(ball1Position.x - ball2Position.x) < ballRadius * 2) {
+                float overlap = ballRadius * 2 - fabs(ball1Position.x - ball2Position.x);
+                if (ball1Position.x < ball2Position.x) {
+                    ball1Position.x -= overlap / 2;
+                    ball2Position.x += overlap / 2;
+                } else {
+                    ball1Position.x += overlap / 2;
+                    ball2Position.x -= overlap / 2;
+                }
+            }
         }
         if (ball1Position.x < ballRadius) {
             ball1Position.x = ballRadius;
