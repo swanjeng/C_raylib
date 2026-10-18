@@ -1,20 +1,42 @@
 #include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 450
+#define TITLE "猜數字遊戲 - 0 到 9"
+#define BTN_NORMAL_COLOR SKYBLUE
+#define BTN_HOVERED_COLOR BLUE
+#define BTN_CLICKED_COLOR DARKBLUE
 
 int main() {
-    const int screenWidth = 800, screenHeight = 450;
-    const char title[] = "猜數字遊戲 - 0 到 9", intToString[10][2] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    const char intToString[10][2] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     int btnPressed[10] = {}, pause = 0;
     int number = GetRandomValue(0, 9), guess = -1;
     char* text;
+    
+    Rectangle buttons[10];
+    for (int i = 0 ; i < 10 ; i ++) buttons[i] = (Rectangle){150 + 50 * i, 250, 50, 50};
+    Color buttonColor[10];
+    for (int i = 0 ; i < 10 ; i ++)  buttonColor[i] = BTN_NORMAL_COLOR;
 
-    InitWindow(screenWidth, screenHeight, title);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
     SetTargetFPS(60);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 50);
 
     while (!WindowShouldClose()) {
+        Vector2 mousePos = GetMousePosition();
+        for (int i = 0 ; i < 10 ; i ++) {
+            if (CheckCollisionPointRec(mousePos, buttons[i])) {
+                buttonColor[i] = BTN_HOVERED_COLOR;
+                if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+                    buttonColor[i] = BTN_CLICKED_COLOR;
+                    btnPressed[i] = 1;
+                } else {
+                    btnPressed[i] = 0;
+                }
+            } else {
+                buttonColor[i] = BTN_NORMAL_COLOR;
+            }
+        }
+
         if (pause && (IsKeyDown('r') || IsKeyDown('R'))) {
             pause = 0;
             number = GetRandomValue(0, 9);
@@ -43,7 +65,7 @@ int main() {
         ClearBackground(RAYWHITE);
         DrawText(text, 100, 100, 30, BLACK);
         for (int i = 0 ; i <= 9 ; i ++) {
-            btnPressed[i] = GuiButton((Rectangle) {150 + 50 * i, 250, 50, 50}, intToString[i]);
+            DrawRectangleRec(buttons[i], buttonColor[i]);
         }
         EndDrawing();
     }
