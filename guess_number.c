@@ -11,7 +11,7 @@ int main() {
 
     int btnPressed[10] = {}, pause = 0;
     int number = GetRandomValue(0, 9), guess = -1;
-    char* text;
+    char* text = "Guess between 0 and 9";
     
     Rectangle buttons[10];
     for (int i = 0 ; i < 10 ; i ++) buttons[i] = (Rectangle){150 + 50 * i, 250, 50, 50};
@@ -66,6 +66,7 @@ int main() {
         DrawText(text, 100, 100, 30, BLACK);
         for (int i = 0 ; i <= 9 ; i ++) {
             DrawRectangleRec(buttons[i], buttonColor[i]);
+            DrawText(intToString[i], buttons[i].x + buttons[i].width / 2, buttons[i].y + buttons[i].height / 2, 20, BLACK);
         }
         EndDrawing();
     }
