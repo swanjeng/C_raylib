@@ -53,9 +53,9 @@ int main() {
         ClearBackground(WHITE);
         DrawText(TextFormat("%d", counter), 300, 100, 50, BLACK);
         DrawRectangleRec(plusButton, plusColor);
-        DrawText("+", plusButton.x + plusButton.width / 2, plusButton.y + plusButton.height / 2, 50, RAYWHITE);
+        DrawText("+", 190, 325, 50, RAYWHITE);
         DrawRectangleRec(minusButton, minusColor);
-        DrawText("-", minusButton.x + minusButton.width / 2, minusButton.y + minusButton.height / 2, 50, RAYWHITE);
+        DrawText("-", 590, 325, 50, RAYWHITE);
         EndDrawing();
     }
 
