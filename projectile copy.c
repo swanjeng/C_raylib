@@ -4,9 +4,9 @@
 #define SCREEN_HEIGHT 450
 #define TITLE "拋體與自由落體 - Raylib"
 #define BALL_RADIUS 20
-#define DISTANCE 750
-#define BALL_HEIGHT 400
-#define BALL1_VEL_MAG 5
+#define DISTANCE 400
+#define BALL_HEIGHT 300
+#define BALL1_VEL_MAG 10
 
 int main() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
@@ -17,7 +17,7 @@ int main() {
     double theta = atan((ball1Position.y - ball2Position.y) * 1.0 / (ball2Position.x - ball1Position.x));
     Vector2 ball1Velocity = {BALL1_VEL_MAG * cos(theta), -BALL1_VEL_MAG * sin(theta)};
     Vector2 ball2Velocity = {0, 0};
-    Vector2 gravity = {0, 0.1};
+    Vector2 gravity = {0, 0.17};
 
     while (!WindowShouldClose()) {
         ball1Velocity.y += gravity.y;
@@ -28,8 +28,9 @@ int main() {
         
         ball2Position.y += ball2Velocity.y;
 
-        if (ball1Position.x > ball2Position.x) {
+        if (ball1Position.x >= ball2Position.x) {
             ball1Position.x = ball2Position.x;
+            ball1Position.y = ball2Position.y;
         }
         if (ball1Position.y > SCREEN_HEIGHT - BALL_RADIUS) {
             ball1Position.y = SCREEN_HEIGHT - BALL_RADIUS;
