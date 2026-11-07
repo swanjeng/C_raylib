@@ -13,9 +13,9 @@ int main() {
     float ball2Mass = 1.0;
     Color ball1Color = {255, 0, 0, 255};
     Color ball2Color = {0, 0, 255, 255};
-    Vector2 ball1Position = { 200, 255 };
-    Vector2 ball2Position = { 600, 255 };
-    
+    Vector2 ball1Position = {200, 255};
+    Vector2 ball2Position = {600, 255};
+
     InitWindow(screenWidth, screenHeight, title);
     SetTargetFPS(60);
 
