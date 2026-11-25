@@ -7,6 +7,7 @@ int main() {
     const int ballRadius = 20;
     Color ballColor = {255, 0, 128, 255};
 
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, title);
     SetTargetFPS(60);
 
